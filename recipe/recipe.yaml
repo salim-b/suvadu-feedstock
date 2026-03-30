@@ -1,5 +1,5 @@
 context:
-  version: "0.2.0"
+  version: "0.2.1"
 
 package:
   name: suvadu
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/AppachiTech/suvadu/archive/refs/tags/v${{ version }}.tar.gz
-  sha256: 17488d9e8c1f760e86afb7b5ea39fcf9b58910d3eb6717b7e085f75f092c001b
+  sha256: daf1c4af738fff493cf69eb1f6e0ab1f779f53add5e9b2b77cc90f6749f25e25
 
 build:
   number: 0
