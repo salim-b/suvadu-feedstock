@@ -20,23 +20,19 @@ build:
         then:
           - cargo auditable install --locked --no-track --bins --root ${{ PREFIX }} --path .
           # generate shell completions
-          - if: build_platform == host_platform
-            then:
-              - mkdir -p $PREFIX/share/bash-completion/completions $PREFIX/share/fish/vendor_completions.d $PREFIX/share/zsh/site-functions
-              - $PREFIX/bin/suv completions bash > $PREFIX/share/bash-completion/completions/suv
-              - $PREFIX/bin/suv completions fish > $PREFIX/share/fish/vendor_completions.d/suv.fish
-              - $PREFIX/bin/suv completions zsh > $PREFIX/share/zsh/site-functions/_suv
+          - mkdir -p $PREFIX/share/bash-completion/completions $PREFIX/share/fish/vendor_completions.d $PREFIX/share/zsh/site-functions
+          - $PREFIX/bin/suv completions bash > $PREFIX/share/bash-completion/completions/suv
+          - $PREFIX/bin/suv completions fish > $PREFIX/share/fish/vendor_completions.d/suv.fish
+          - $PREFIX/bin/suv completions zsh > $PREFIX/share/zsh/site-functions/_suv
         else:
           - cargo auditable install --locked --no-track --bins --root %LIBRARY_PREFIX% --path .
           # generate shell completions
-          - if: build_platform == host_platform
-            then:
-              - mkdir %LIBRARY_PREFIX%\share\bash-completion\completions
-              - mkdir %LIBRARY_PREFIX%\share\fish\vendor_completions.d
-              - mkdir %LIBRARY_PREFIX%\share\zsh\site-functions
-              - '%LIBRARY_BIN%\suv.exe completions bash > %LIBRARY_PREFIX%\share\bash-completion\completions\suv'
-              - '%LIBRARY_BIN%\suv.exe completions fish > %LIBRARY_PREFIX%\share\fish\vendor_completions.d\suv.fish'
-              - '%LIBRARY_BIN%\suv.exe completions zsh > %LIBRARY_PREFIX%\share\zsh\site-functions\_suv'
+          - mkdir %LIBRARY_PREFIX%\share\bash-completion\completions
+          - mkdir %LIBRARY_PREFIX%\share\fish\vendor_completions.d
+          - mkdir %LIBRARY_PREFIX%\share\zsh\site-functions
+          - '%LIBRARY_BIN%\suv.exe completions bash > %LIBRARY_PREFIX%\share\bash-completion\completions\suv'
+          - '%LIBRARY_BIN%\suv.exe completions fish > %LIBRARY_PREFIX%\share\fish\vendor_completions.d\suv.fish'
+          - '%LIBRARY_BIN%\suv.exe completions zsh > %LIBRARY_PREFIX%\share\zsh\site-functions\_suv'
       - cargo-bundle-licenses --format yaml --output ./THIRDPARTY.yml
 
 requirements:
@@ -49,20 +45,18 @@ requirements:
 
 tests:
   - script:
-      - if: build_platform == host_platform
-        then:
-          - suv help
-          - suv version
+      - suv help
+      - suv version
   - package_contents:
       bin:
         - suv
       files:
-        - if: unix and build_platform == host_platform
+        - if: unix
           then:
             - share/bash-completion/completions/suv
             - share/fish/vendor_completions.d/suv.fish
             - share/zsh/site-functions/_suv
-        - if: win and build_platform == host_platform
+        - if: win
           then:
             - Library/share/bash-completion/completions/suv
             - Library/share/fish/vendor_completions.d/suv.fish
